@@ -12,7 +12,7 @@ public class CourseInfo {
 		int n = courses.size();
 		System.out.printf("There are %d courses in the database.\n", n);
 		
-		String name = courses.find("MM2001").getCourseName();
+		String name = courses.find("DA2004").getCourseName();
 		System.out.printf("Name: %s\n", name);
 	}
 

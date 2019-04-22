@@ -22,7 +22,7 @@ public class BinarySearchTree {
 		BSTNode node = new BSTNode(courseCode, courseName, courseCredits);
 		root = insert(root, node);
 	}
-	
+
 	/**
 	 * Insert 'node' into the tree pointed at by 'root'.
 	 * @returns The node that should be the root of this subtree.
@@ -41,7 +41,7 @@ public class BinarySearchTree {
 			if (node.getCourseCode().compareTo(currentKey) < 0) { // left string "before" right string
 				left = insert(left, node);
 			} else if (node.getCourseCode().compareTo(currentKey) > 0) { // left string "after" right string
-				right = insert(left, node);
+				right = insert(right, node);
 			}
 			
 			root.setChildren(left, right);
@@ -52,18 +52,52 @@ public class BinarySearchTree {
 	/**
 	 * size: Count the number of nodes in the search tree
 	 */
-	
 	public int size() {
-	    return 0; // Dummy return value, to make it compile. Should be replace with proper algorithm.
+		if (root == null) {
+			return 0;
+		} else {
+			return sizeHelper(root);
+		}
+	}
+
+	private int sizeHelper(BSTNode root) {
+		BSTNode left = root.getLeftChild();
+		BSTNode right = root.getRightChild();
+		if (left == null && right == null) {
+			return 1;
+		} else if (left == null && right != null) {
+			return 1 + sizeHelper(right);
+		} else if (left != null && right == null) {
+			return 1 + sizeHelper(left);
+		} else {
+			return 1 + (sizeHelper(left) + sizeHelper(right));
+		}
 	}
 	
 	/**
 	 * find: Find a course given a course code
 	 */
 	public BSTNode find(String courseCode) {
-	    return null; // Dummy return value. Should be replaced with a proper algorithm.
+		return findHelper(root, courseCode);
 	}
-	
+
+	private BSTNode findHelper(BSTNode root, String courseCode) {
+		if (root == null) {
+			return null;
+		} else if (root.getCourseCode() == courseCode) {
+			return root;
+		} else {
+			String currentKey = root.getCourseCode();
+			BSTNode left = root.getLeftChild();
+			BSTNode right = root.getRightChild();
+			if (courseCode.compareTo(currentKey) < 0) {
+				return findHelper(left, courseCode);
+			} else {
+				return findHelper(right, courseCode);
+			}
+		}
+	}
+
 	
 	/**
 	 * Nodes in the search tree
